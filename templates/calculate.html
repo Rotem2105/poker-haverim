@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>תוצאות חישוב</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h1>תוצאות</h1>
+    <ul>
+        {% for t in transactions %}
+            <li>{{ t }}</li>
+        {% endfor %}
+    </ul>
+    <a href="/">חזור להזנת שחקנים</a>
+</body>
+</html>

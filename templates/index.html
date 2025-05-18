@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <title>פוקר חברים</title>
+    <style>
+        body {
+            background-color: #0B6623;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #FFD700;
+            font-size: 48px;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        h2 {
+            color: #FFF;
+        }
+
+        form {
+            margin: 20px auto;
+        }
+
+        .input-line {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            background-color: #FFD700;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 6px 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .results {
+            margin-top: 40px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>פוקר חברים</h1>
+
+    <form method="POST">
+        <div class="input-line">
+            <input type="text" name="name" placeholder="שם שחקן" required autofocus>
+            <input type="number" name="buy_in" placeholder="כניסה" step="0.01" required>
+            <input type="number" name="cash_out" placeholder="יציאה" step="0.01" required>
+        </div>
+        <button type="submit">הוסף שחקן</button>
+    </form>
+
+    <h2>שחקנים</h2>
+    <ul>
+    {% for p in players %}
+        <li>
+            {{ p.name }} | כניסה: {{ p.buy_in }} | יציאה: {{ p.cash_out }}
+            <a href="/delete/{{ p.name }}">
+                <button style="margin-right:10px; background-color:red; color:white;">מחק</button>
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
+    <form action="/calculate" method="get">
+        <button type="submit">חשב תוצאות</button>
+    </form>
+
+    {% if transactions %}
+<div class="results">
+    <h2>תוצאות</h2>
+    <ul id="resultsList">
+        {% for t in transactions %}
+            <li>{{ t }}</li>
+        {% endfor %}
+    </ul>
+
+    <a id="whatsappLink" target="_blank">
+        <button type="button">שלח ב־WhatsApp</button>
+    </a>
+</div>
+{% endif %}
+
+    <form action="/reset">
+        <button type="submit">אפס שחקנים</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const nameInput = document.querySelector('input[name="name"]');
+            if (nameInput) {
+                nameInput.focus();
+            }
+        });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const nameInput = document.querySelector('input[name="name"]');
+        if (nameInput) {
+            nameInput.focus();
+        }
+
+        const link = document.getElementById('whatsappLink');
+        const results = document.getElementById('resultsList');
+        if (link && results) {
+            const lines = Array.from(results.querySelectorAll('li')).map(li => li.textContent);
+            const text = encodeURIComponent("התחשבנות פוקר:\n" + lines.join('\n'));
+            link.href = "https://wa.me/?text=" + text;
+        }
+    });
+</script>
+</body>
+</html>
