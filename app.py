@@ -52,17 +52,17 @@ def calculate():
         payer['balance'] += rounded
         receiver['balance'] -= rounded
 
-    return render_template('index.html', players=players, transactions=transactions)
+    return render_template('calculate.html', players=players, transactions=transactions)
 
 @app.route('/reset')
 def reset():
     players.clear()
     return redirect('/')
 
-@app.route('/delete/<name>')
-def delete_player(name):
-    global players
-    players = [p for p in players if p['name'] != name]
+@app.route('/delete/<int:index>')
+def delete(index):
+    if 0 <= index < len(players):
+        players.pop(index)
     return redirect('/')
 
 if __name__ == '__main__':

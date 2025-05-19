@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>פוקר חברים</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        input, button {
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>פוקר חברים</h1>
+
+    <form method="post">
+        <input type="text" name="name" id="nameinput" placeholder="שם שחקן" required>
+        <input type="number" name="buy_in" placeholder="כניסה" required>
+        <input type="number" name="cash_out" placeholder="יציאה" required>
+        <button type="submit">הוסף שחקן</button>
+    </form>
+
+    <ul>
+        {% for p in players %}
+            <li>{{ p.name }} — כניסה: {{ p.buy_in }} | יציאה: {{ p.cash_out }}</li>
+        <a href="/delete/{{ loop.index0 }}">[מחק]</a>
+        {% endfor %}
+    </ul>
+
+    <form action="/calculate">
+        <button type="submit">חשב</button>
+    </form>
+    <script>
+    window.onload = function() {
+        const input = document.getElementById("nameInput");
+        if (input) {
+            input.focus();
+        }
+    };
+    </script>
+</body>
+</html>

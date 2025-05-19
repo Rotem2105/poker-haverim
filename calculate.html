@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>תוצאה סופית</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background-color: #fff8f0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #results {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background-color: #25d366;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            color: #333;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>התחשבנות</h1>
+
+    <div id="results">
+        <ul>
+            {% for t in transactions %}
+                <li>{{ t }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <button onclick="shareWhatsApp()">שלח בוואטסאפ</button>
+    <a href="/">חזרה להזנת שחקנים</a>
+
+    <script>
+        function shareWhatsApp() {
+            const text = document.getElementById("results").innerText;
+            const url = "https://wa.me/?text=" + encodeURIComponent(text);
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
